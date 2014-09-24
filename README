@@ -1,0 +1,18 @@
+- Tcl Library and Applications for the Yate Telephony Engine (yate.null.ro)
+
+- licensed BSD - see LICENSE.txt
+|
+|- ygi/
+|   Tcl message handler library for Yate extmodule scripting
+|   (The name 'ygi' is an acronym for 'Yate Gateway Interface' and was chosen
+|   with asterisk's 'agi' in mind.)
+|
+|- *.tcl
+|   various examples
+|
+
+Contact:
+|
+| Ben Fuhrmannek <bef@eventphone.de>
+|-	sip:2004@hg.eventphone.de
+|
