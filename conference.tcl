@@ -1,4 +1,4 @@
-#!/usr/bin/env tclsh8.5
+#!/usr/bin/env tclsh
 #
 # Yate Script: conference with optional password protection
 #
@@ -12,6 +12,8 @@
 # example regexroute.conf entry:
 # ^84$=external/nodata/conference.tcl;room=conf/42;lonely=true;maxusers=23;password=0001
 #
+
+package require Tcl 8.5
 
 ## YGI setup
 set auto_path [linsert $auto_path 0 [file dirname $::argv0]]

@@ -9,6 +9,8 @@
 # All rights reserved.
 # 
 
+package require Tcl 8.6
+
 ## YGI setup
 set auto_path [linsert $auto_path 0 [file dirname $::argv0]]
 package require ygi

@@ -1,4 +1,4 @@
-#!/usr/bin/env tclsh8.6
+#!/usr/bin/env tclsh
 #
 # Yate Message Filter/Dumper
 # - dump all messages meeting certain criteria -
@@ -8,6 +8,8 @@
 #
 # Copyright (c) 2013, Ben Fuhrmannek
 # All rights reserved.
+
+package require Tcl 8.6
 
 ## cmd opts
 package require cmdline

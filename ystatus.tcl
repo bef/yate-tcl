@@ -1,4 +1,4 @@
-#!/usr/bin/env tclsh8.6
+#!/usr/bin/env tclsh
 #
 # Yate Status Monitor
 # - display active channels and important messages in real-time
@@ -10,6 +10,8 @@
 # Copyright (c) 2013, Ben Fuhrmannek
 # All rights reserved.
 #
+
+package require Tcl 8.6
 
 set ysm_version "0.1a1"
 

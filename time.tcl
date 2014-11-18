@@ -1,4 +1,4 @@
-#!/usr/bin/env tclsh8.5
+#!/usr/bin/env tclsh
 #
 # Yate Script: say current time
 #
@@ -13,6 +13,7 @@
 # ^80$=external/nodata/time.tcl
 #
 
+package require Tcl 8.5
 
 ## YGI setup
 set auto_path [linsert $auto_path 0 [file dirname $::argv0]]

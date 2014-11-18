@@ -1,4 +1,4 @@
-#!/usr/bin/env tclsh8.5
+#!/usr/bin/env tclsh
 #
 # Yate Script: unix domain socket connection example (kind of)
 #
@@ -14,6 +14,8 @@
 # type=unix
 # path=/tmp/yate.sock
 # 
+
+package require Tcl 8.5
 
 ## YGI setup
 set auto_path [linsert $auto_path 0 [file dirname $::argv0]]

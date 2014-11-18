@@ -1,4 +1,4 @@
-#!/usr/bin/env tclsh8.5
+#!/usr/bin/env tclsh
 #
 # Yate Script: access multiple conferences based on access code
 #
@@ -12,6 +12,8 @@
 # example regexroute.conf entry:
 # ^85$=external/nodata/multiconference.tcl;configfile=/usr/local/share/yate/scripts/multiconference.conf;lonely=true
 #
+
+package require Tcl 8.5
 
 ## YGI setup
 set auto_path [linsert $auto_path 0 [file dirname $::argv0]]

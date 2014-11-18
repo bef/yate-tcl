@@ -1,4 +1,4 @@
-#!/usr/bin/env tclsh8.5
+#!/usr/bin/env tclsh
 #
 # Yate Script: TCP connection example
 # - dump all messages except engine.timer -
@@ -16,6 +16,8 @@
 # addr=127.0.0.1
 # port=5039
 # 
+
+package require Tcl 8.5
 
 ## YGI setup
 set auto_path [linsert $auto_path 0 [file dirname [info script]]]

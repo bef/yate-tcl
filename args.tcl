@@ -1,4 +1,4 @@
-#!/usr/bin/env tclsh8.5
+#!/usr/bin/env tclsh
 #
 # Yate Script: example: pass arguments from dialplan to script
 #
@@ -12,6 +12,8 @@
 # example regexroute.conf entry:
 # ^83$=external/nodata/args.tcl arg1 arg2 "arg 3";ext_foo=bar
 #
+
+package require Tcl 8.5
 
 ## ygi init
 set auto_path [linsert $auto_path 0 [file dirname $::argv0]]

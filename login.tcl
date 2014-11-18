@@ -1,4 +1,4 @@
-#!/usr/bin/env tclsh8.5
+#!/usr/bin/env tclsh
 #
 # Yate Script: login example
 #
@@ -17,6 +17,7 @@
 # 	::ygi::ask_password password $::ygi::env(password) exit_on_failure true
 # }
 
+package require Tcl 8.5
 
 ## CONFIGURATION
 ## manually set custom soundpath and soundformats here instead of yate.conf section [ygi]
