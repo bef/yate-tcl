@@ -11,7 +11,7 @@
 # All rights reserved.
 #
 
-package require Tcl 8.6
+package require Tcl 8.5
 
 set ysm_version "0.1a1"
 

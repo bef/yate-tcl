@@ -9,7 +9,7 @@
 # Copyright (c) 2013, Ben Fuhrmannek
 # All rights reserved.
 
-package require Tcl 8.6
+package require Tcl 8.5
 
 ## cmd opts
 package require cmdline

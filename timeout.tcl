@@ -1,4 +1,4 @@
-#!/usr/bin/env tclsh8.5
+#!/usr/bin/env tclsh
 #
 # Yate Script: script timeout example
 #
@@ -9,7 +9,7 @@
 # All rights reserved.
 # 
 
-package require Tcl 8.6
+package require Tcl 8.5
 
 ## YGI setup
 set auto_path [linsert $auto_path 0 [file dirname $::argv0]]
