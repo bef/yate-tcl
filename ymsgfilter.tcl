@@ -6,7 +6,7 @@
 # Author: Ben Fuhrmannek <bef@eventphone.de>
 # Date: 2013-11-30
 #
-# Copyright (c) 2013, Ben Fuhrmannek
+# Copyright (c) 2013-2014, Ben Fuhrmannek
 # All rights reserved.
 
 package require Tcl 8.5

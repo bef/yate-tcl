@@ -7,6 +7,9 @@
 |   (The name 'ygi' is an acronym for 'Yate Gateway Interface' and was chosen
 |   with asterisk's 'agi' in mind.)
 |
+|- ystatus.tcl
+|   realtime channel monitor.
+|
 |- *.tcl
 |   various examples
 |

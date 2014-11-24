@@ -7,7 +7,7 @@
 # Author: Ben Fuhrmannek <bef@eventphone.de>
 # Date: 2013-12-03
 #
-# Copyright (c) 2013, Ben Fuhrmannek
+# Copyright (c) 2013-2014, Ben Fuhrmannek
 # All rights reserved.
 #
 
@@ -78,7 +78,7 @@ namespace eval ::ystatusui {
 
 		puts -nonewline "[a::sda_bgblack][a::clear]"
 		puts -nonewline "[a::sda_fgyellow][a::sda_bgblue][a::sda_bold]"
-		puts "Yate Status Monitor v$::ysm_version - (c) 2013, BeF <bef@eventphone.de>[a::eeol]"
+		puts "Yate Status Monitor v$::ysm_version - (c) BeF <bef@eventphone.de>[a::eeol]"
 		puts -nonewline "[a::sda_nobold][a::sda_bgblack][a::sda_fgwhite]"
 		
 		if {$chandata eq ""} {
