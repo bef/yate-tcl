@@ -169,6 +169,7 @@ namespace eval ::ygi::test {
 	# proc ::ygi::heartbeat 
 	# proc ::ygi::quit 
 	# proc ::ygi::ask_password 
+	# proc ::ygi::callgen
 	
 	cleanupTests
 }

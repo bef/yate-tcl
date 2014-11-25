@@ -4,7 +4,7 @@
 # Author: Ben Fuhrmannek <bef@eventphone.de>
 # Date: 2012-09-21
 # 
-# Copyright (c) 2012, Ben Fuhrmannek
+# Copyright (c) 2012-2014, Ben Fuhrmannek
 # All rights reserved.
 # 
 # Redistribution and use in source and binary forms, with or without
@@ -30,7 +30,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package require Tcl 8.5
-package provide ygi 0.1
+package provide ygi 0.2
 
 ## define Tcl8.6 function lmap
 if {[info command lmap] eq ""} {
@@ -870,3 +870,31 @@ proc ::ygi::say_digits {digits {language en}} {
 	}
 }
 
+## generate call between A and B with routing
+proc ::ygi::callgen {targetA targetB args} {
+	dict_args [list callerA $targetB callerB $targetA auto_hangup 1]
+	 
+	set success [::ygi::msg call.execute callto dumb/ target $targetA caller $callerA]
+	if {!$success} { return {false} }
+	set idA [dict get $::ygi::lastresult(kv) peerid]
+
+	set success [::ygi::msg call.execute callto dumb/ target $targetB caller $callerB]
+	if {!$success} {
+		## problem. hangup first call
+		if {$auto_hangup} { ::ygi::msg call.drop id $idA }
+		return [list false [list $idA]]
+	}
+	set idB [dict get $::ygi::lastresult(kv) peerid]
+
+	set success [::ygi::msg chan.connect id $idA targetid $idB]
+	if {!$success} {
+		## problem. hangup both lines
+		if {$auto_hangup} {
+			::ygi::msg call.drop id $idA
+			::ygi::msg call.drop id $idB
+		}
+		return [list false [list $idA $idB]]
+	}
+	
+	return true
+}
