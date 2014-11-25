@@ -1,20 +1,70 @@
-- Tcl Library and Applications for the Yate Telephony Engine (yate.null.ro)
+Tcl Library and Applications for the Yate Telephony Engine (yate.null.ro)
+=========================================================================
 
 - licensed BSD - see LICENSE.txt
-|
-|- ygi/
-|   Tcl message handler library for Yate extmodule scripting
-|   (The name 'ygi' is an acronym for 'Yate Gateway Interface' and was chosen
-|   with asterisk's 'agi' in mind.)
-|
-|- ystatus.tcl
-|   realtime channel monitor.
-|
-|- *.tcl
-|   various examples
-|
 
-Contact:
+The library
+-----------
+
+ygi/
+  Tcl message handler library for Yate extmodule scripting
+  (The name 'ygi' is an acronym for 'Yate Gateway Interface' and was chosen
+  with asterisk's 'agi' in mind.)
+
+
+CLI scripts
+-----------
+
+ystatus.tcl
+  realtime channel monitor showing ansi colored text output of current calls.
+
+dumpmsgs.tcl
+  print all yate messages except engine.timer in a human-friendly way
+
+ymsgfilter.tcl
+  print yate messages matching message name and/or key/value pairs
+
+callgen.tcl
+  generate call and connect two extensions
+
+check_modules.tcl
+  maintenance script to check module list in yate.conf
+
+
+extmodule scripts
+-----------------
+
+conference.tcl
+  join conference with optional password protection
+
+multiconference.tcl
+  access multiple conferences based on access code
+
+digitcollector.tcl
+  collect digits until timeout, then dial.
+  hack for numbering schemes with variable length (or unknown length) numbers
+
+time.tcl
+  time announcement
+
+
+example scripts
+---------------
+args.tcl
+  example to show how to pass arguments from regexroute.conf to the script
+
+socketconnect.tcl
+  unix domain socket connection example (using netcat)
+
+timeout.tcl
+  script timeout and idle timeout example
+
+http_post.tcl
+  execute HTTP POST request
+
+
+Contact
+-------
 |
 | Ben Fuhrmannek <bef@eventphone.de>
 |-	sip:2004@hg.eventphone.de
