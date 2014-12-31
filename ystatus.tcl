@@ -16,7 +16,7 @@ package require Tcl 8.5
 set ysm_version "0.1a1"
 
 set auto_path [linsert $auto_path 0 [file dirname [info script]]]
-package require ygi
+package require ygi 0.3
 package require cmdline
 package require term::ansi::code
 package require term::ansi::code::ctrl
@@ -117,6 +117,7 @@ namespace eval ::ystatusui {
 				info {puts -nonewline "[a::sda_fgyellow][a::sda_bgblack]"}
 				notice {puts -nonewline "[a::sda_fgblack][a::sda_bgcyan]"}
 				warning {puts -nonewline "[a::sda_fgblack][a::sda_bgred]"}
+				error {puts -nonewline "[a::sda_fgred][a::sda_bgblack]"}
 				default {puts -nonewline "[a::sda_fgcyan][a::sda_bgblack]"}
 			}
 			puts "\[$level\] $msg"
@@ -125,7 +126,7 @@ namespace eval ::ystatusui {
 		flush stdout
 	}
 	
-	proc update_chan {id kv} {
+	proc update_chan {id kv {update_ui true}} {
 		variable chandata
 		if {![dict exists $chandata $id]} {
 			dict set chandata $id $kv
@@ -134,6 +135,7 @@ namespace eval ::ystatusui {
 				set v [dict merge $v $kv]
 			}
 		}
+		if {!$update_ui} { return }
 		update_display
 	}
 	
@@ -208,6 +210,23 @@ proc user_unregister_handler {_id processed name retvalue kv} {
 
 
 ##############################################################################
+
+proc update_from_status {} {
+	## populate with current current channels
+	foreach {info stats details} [::ygi::get_status module sip] {
+		if {[dict get $info name] ne "sip"} { continue }
+		foreach {id entry} $details {
+			set kv {}
+			lappend kv status [dict get $entry Status]
+			lappend kv address [dict get $entry Address]
+			lappend kv peerid [dict get $entry Peer]
+			::ystatusui::update_chan $id $kv false
+		}
+	}
+	::ystatusui::update_display
+}
+
+##############################################################################
 ## start.
 set ::ygi::onexit {
 	## cleanup
@@ -232,5 +251,12 @@ set ::ygi::debug $cfg(yd)
 ::ygi::watch user.unregister user_unregister_handler
 ::ygi::watch engine.timer engine_timer_handler
 
+try {
+	update_from_status
+} on error {errmsg} {
+	::ystatusui::flashmessage error "engine.status failed: $errmsg"
+}
+
+## loop
 ::ygi::loop_forever
 

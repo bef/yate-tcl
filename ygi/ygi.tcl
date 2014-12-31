@@ -30,7 +30,7 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package require Tcl 8.5
-package provide ygi 0.2
+package provide ygi 0.3
 
 ## define Tcl8.6 function lmap
 if {[info command lmap] eq ""} {
@@ -898,3 +898,53 @@ proc ::ygi::callgen {targetA targetB args} {
 	
 	return true
 }
+
+
+### helper functions for status parsing
+
+## split a=b,c=d => {a b c d}
+proc ::ygi::slist2dict {l} {
+	set ret {}
+	foreach kv [split $l ","] {
+		dict set ret {*}[split $kv "="]
+	}
+	return $ret
+}
+
+## split {a b|c|d ...} with fmt X|Y|Z -> {a {X b Y c Z d} ...}
+proc ::ygi::details2dict {fmt details} {
+	set fmtlist [split $fmt "|"]
+	foreach {k v} $details {
+		set data [split $v "|"]
+		set retlist {}
+		for {set i 0} {$i < [llength $fmtlist]} {incr i} {
+			lappend retlist [lindex $fmtlist $i] [lindex $data $i]
+		}
+		dict set details $k $retlist
+	}
+	return $details
+}
+
+proc ::ygi::parse_status {data} {
+	set result {}
+	## name=sip,type=varchans,format=Status|Address|Peer;routed=7,routing=0,total=8,chans=1;sip/8=answered|172.16.229.1:5060|conf/4
+	foreach line [split [string trim $data] "\n"] {
+		## split ...;...;... -> $info $stats $details
+		set parts [split [string trim $line] ";"]
+		lassign [lmap part [lrange $parts 0 2] {slist2dict $part}] info stats details
+		
+		if {$details ne "" && [dict exists $info format]} {
+			set details [details2dict [dict get $info format] $details]
+		}
+		
+		lappend result {*}[list $info $stats $details]
+	}
+	return $result
+}
+
+proc ::ygi::get_status {args} {
+	msg engine.status {*}$args
+	return [parse_status $::ygi::lastresult(retvalue)]
+}
+
+###
