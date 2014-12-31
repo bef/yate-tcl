@@ -1,6 +1,6 @@
 #!/usr/bin/env tclsh
 ##
-## this script checks if all modules and only existing modules are listed in yate.conf
+## CLI Script: this script checks if all modules and only existing modules are listed in yate.conf
 ##
 
 package require Tcl 8.6

@@ -1,6 +1,6 @@
 #!/usr/bin/env tclsh
 #
-# Yate Script: TCP connection example
+# CLI Script: TCP connection example
 # - dump all messages except engine.timer -
 #
 # Author: Ben Fuhrmannek <bef@eventphone.de>

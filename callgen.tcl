@@ -1,6 +1,6 @@
 #!/usr/bin/env tclsh
 #
-# Yate Script: generate call from command line
+# Yate CLI Script: generate call from command line
 #
 # Author: Ben Fuhrmannek <bef@eventphone.de>
 # Date: 2014-11-25

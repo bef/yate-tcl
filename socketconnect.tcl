@@ -1,6 +1,6 @@
 #!/usr/bin/env tclsh
 #
-# Yate Script: unix domain socket connection example (kind of)
+# CLI Script: unix domain socket connection example (kind of)
 #
 # Author: Ben Fuhrmannek <bef@eventphone.de>
 # Date: 2012-09-25
