@@ -3,7 +3,7 @@
 # Yate CLI Script: generate scripted call from command line
 #
 # Author: Ben Fuhrmannek <bef@eventphone.de>
-# Date: 2014-11-25
+# Date: 2018-08-28
 #
 # Copyright (c) 2018, Ben Fuhrmannek
 # All rights reserved.
