@@ -27,6 +27,9 @@ ymsgfilter.tcl
 callgen.tcl
   generate call and connect two extensions
 
+callgen-script.tcl
+  generate call and play sounds
+
 check_modules.tcl
   maintenance script to check module list in yate.conf
 
