@@ -27,7 +27,7 @@ function createsnd() {
 	rm $1.tmp.wav
 	sox $1.wav -t raw -r 8000 -c 1 -e signed-integer $1.slin
 	## linux/other
-	#espeak  -v en-uk -z --stdout $2 |sox -t wav - -t raw -r 8000 -c 1 -s $1.slin
+	#espeak  -v en-uk -z --stdout $2 |sox -t wav - -t raw -r 8000 -c 1 -e signed-integer $1.slin
 }
 
 ## some checks first
