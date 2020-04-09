@@ -784,46 +784,49 @@ proc ::ygi::getenv {key {default ""}} {
 
 ##
 
-proc ::ygi::_en_numberfiles {number} {
+proc ::ygi::_numberfiles {number {language en-UK}} {
 	if {$number < 0} {return}
 	if {$number <= 23} {return [list $number]}
-	if {[_find_soundfile "digits/$number"] ne "digits/$number"} {return [list $number]}
-	if {$number < 100} {
-		set rem [expr {$number % 10}]
-		set files [list [expr {$number - $rem}]]
-		if {$rem} {lappend files $rem}
-		return $files
+	if {[_find_soundfile "$language/digits/$number"] ne "$language/digits/$number"} {return [list $number]}
+	
+	set language_family [string range $language 0 1]
+	switch $language_family {
+		de {
+			if {$number < 100} {
+				set rem [expr {$number % 10}]
+				set tens [expr {$number - $rem}]
+				if {$rem} {return [list $rem und $tens]}
+				return [list $tens]
+			}
+			if {$number < 1000} {
+				return [list [expr {$number / 100}] hundert {*}[_numberfiles [expr {$number % 100}] $language]]
+			}
+			if {$number < 1000000} {
+				return [list {*}[_numberfiles [expr {$number / 1000}] $language] tausend {*}[_numberfiles [expr {$number % 1000}] $language]]
+			}
+		}
+		en -
+		default {
+			if {$number < 100} {
+				set rem [expr {$number % 10}]
+				set files [list [expr {$number - $rem}]]
+				if {$rem} {lappend files $rem}
+				return $files
+			}
+			if {$number < 1000} {
+				return [list [expr {$number / 100}] hundred and {*}[_numberfiles [expr {$number % 100}] $language]]
+			}
+			if {$number < 1000000} {
+				return [list {*}[_numberfiles [expr {$number / 1000}] $language] thousand {*}[_numberfiles [expr {$number % 1000}] $language]]
+			}
+		}
 	}
-	if {$number < 1000} {
-		return [list [expr {$number / 100}] hundred and {*}[_en_numberfiles [expr {$number % 100}]]]
-	}
-	if {$number < 1000000} {
-		return [list {*}[_en_numberfiles [expr {$number / 1000}]] thousand {*}[_en_numberfiles [expr {$number % 1000}]]]
-	}
-	return [split $number ""]
-}
-
-proc ::ygi::_de_numberfiles {number} {
-	if {$number < 0} {return}
-	if {$number <= 23} {return [list $number]}
-	if {[_find_soundfile "de/digits/$number"] ne "de/digits/$number"} {return [list $number]}
-	if {$number < 100} {
-		set rem [expr {$number % 10}]
-		set tens [expr {$number - $rem}]
-		if {$rem} {return [list $rem und $tens]}
-		return [list $tens]
-	}
-	if {$number < 1000} {
-		return [list [expr {$number / 100}] hundert {*}[_de_numberfiles [expr {$number % 100}]]]
-	}
-	if {$number < 1000000} {
-		return [list {*}[_de_numberfiles [expr {$number / 1000}]] tausend {*}[_de_numberfiles [expr {$number % 1000}]]]
-	}
+	
 	return [split $number ""]
 }
 
 ## say number
-proc ::ygi::say_number {number {language en}} {
+proc ::ygi::say_number {number {language en-UK}} {
 	set number [string trim $number]
 	if {$number ne "0"} {set number [string trimleft $number "0"]}
 	if {$number eq "" || ![string is integer $number]} {
@@ -831,28 +834,19 @@ proc ::ygi::say_number {number {language en}} {
 		return
 	}
 
-	switch $language {
-		de {
-			set files [_de_numberfiles $number]
-			set files [lmap f $files {set _ "de/digits/$f"}]
-		}
-		en -
-		default {
-			set files [_en_numberfiles $number]
-			set files [lmap f $files {set _ "digits/$f"}]
-		}
-	}
+	set files [_numberfiles $number $language]
+	set files [lmap f $files {set _ "$language/digits/$f"}]
+	
 	if {[llength $files]} {
 		play_getdigit filelist $files stopdigits {}
 	}
 }
 
 ## say each digit
-proc ::ygi::say_digits {digits {language en}} {
+proc ::ygi::say_digits {digits {language en-UK}} {
 	set digits [string trim $digits]
 
-	set prefix ""
-	if {$language ne "en"} {set prefix "$language/"}
+	set prefix "$language/"
 	
 	foreach d [join [split $digits ""] " sleep "] {
 		switch -regexp -- $d {

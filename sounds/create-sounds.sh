@@ -47,17 +47,17 @@ VOICE=Daniel
 
 ## digits
 for i in {0..23} 30 40 50 60 70 80 90 and hundred thousand million minus oclock hash asterisk; do
-	createsnd digits/$i $i
+	createsnd en-UK/digits/$i $i
 done
 
 ## NATO phonetic alphabet
 for i in alpha bravo charlie delta echo foxtrot golf hotel india juliet kilo lima mike november oscar papa quebec romeo sierra tango uniform victor whiskey xray yankee zulu; do
-	createsnd phonetic/${i:0:1} $i
+	createsnd en-UK/phonetic/${i:0:1} $i
 done
 
 ## letters
 for i in {a..z} dollar dash percent slash equals comma fullstop; do
-	createsnd letters/$i $i
+	createsnd en-UK/letters/$i $i
 done
 
 ## silence
@@ -75,17 +75,17 @@ for i in {1..10}; do
 done
 
 ## words and phrases
-createsnd enter-password "please enter your password, followed by the pound key"
-createsnd goodbye goodbye
-createsnd t-magic "there is no such thing as magic"
-createsnd time time
-createsnd welcome welcome
-createsnd utc utc
-createsnd im-sorry "i am sorry"
-createsnd conference-unavailable "this conference is currently unavailable"
-createsnd please-try-again-later "please try again later"
-createsnd please-enter-your-access-code "please enter your access code, followed by the pound key"
-createsnd press-snom-reboot "please press star star hash hash"
+createsnd en-UK/enter-password "please enter your password, followed by the pound key"
+createsnd en-UK/goodbye goodbye
+createsnd en-UK/t-magic "there is no such thing as magic"
+createsnd en-UK/time time
+createsnd en-UK/welcome welcome
+createsnd en-UK/utc utc
+createsnd en-UK/im-sorry "i am sorry"
+createsnd en-UK/conference-unavailable "this conference is currently unavailable"
+createsnd en-UK/please-try-again-later "please try again later"
+createsnd en-UK/please-enter-your-access-code "please enter your access code, followed by the pound key"
+createsnd en-UK/press-snom-reboot "please press star star hash hash"
 
 
 ###########################################################
@@ -94,26 +94,26 @@ VOICE=Anna
 
 ## digits
 for i in {0..23} 30 40 50 60 70 80 90 und hundert tausend million millionen minus uhr; do
-	createsnd de/digits/$i $i
+	createsnd de-DE/digits/$i $i
 done
-createsnd de/digits/hash raute
-createsnd de/digits/asterisk stern
+createsnd de-DE/digits/hash raute
+createsnd de-DE/digits/asterisk stern
 
 ## German phonetic alphabet
 for i in anton berta caesar dora emil friedrich gustav heinrich ieda julius kaufmann ludwig martha nordpol otto paula quelle richard siegfried theodor ulrich viktor wilhelm xanthippe ypsilon zeppelin; do
-	createsnd de/phonetic/${i:0:1} $i
+	createsnd de-DE/phonetic/${i:0:1} $i
 done
 
 ## letters
 for i in {a..z} dollar; do
-	createsnd de/letters/$i $i
+	createsnd de-DE/letters/$i $i
 done
-createsnd de/letters/dash Bindestrich
-createsnd de/letters/percent Prozent
-createsnd de/letters/slash Schraegstrich
-createsnd de/letters/equals Istgleich
-createsnd de/letters/comma Komma
-createsnd de/letters/fullstop Punkt
+createsnd de-DE/letters/dash Bindestrich
+createsnd de-DE/letters/percent Prozent
+createsnd de-DE/letters/slash Schraegstrich
+createsnd de-DE/letters/equals Istgleich
+createsnd de-DE/letters/comma Komma
+createsnd de-DE/letters/fullstop Punkt
 
 ## words and phrases
 #createsnd de/foo foo
