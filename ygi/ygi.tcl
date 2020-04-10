@@ -784,7 +784,7 @@ proc ::ygi::getenv {key {default ""}} {
 
 ##
 
-proc ::ygi::_numberfiles {number {language en-UK}} {
+proc ::ygi::_numberfiles {number {language en-GB}} {
 	if {$number < 0} {return}
 	if {$number <= 23} {return [list $number]}
 	if {[_find_soundfile "$language/digits/$number"] ne "$language/digits/$number"} {return [list $number]}
@@ -826,7 +826,7 @@ proc ::ygi::_numberfiles {number {language en-UK}} {
 }
 
 ## say number
-proc ::ygi::say_number {number {language en-UK}} {
+proc ::ygi::say_number {number {language en-GB}} {
 	set number [string trim $number]
 	if {$number ne "0"} {set number [string trimleft $number "0"]}
 	if {$number eq "" || ![string is integer $number]} {
@@ -836,14 +836,14 @@ proc ::ygi::say_number {number {language en-UK}} {
 
 	set files [_numberfiles $number $language]
 	set files [lmap f $files {set _ "$language/digits/$f"}]
-	
+
 	if {[llength $files]} {
 		play_getdigit filelist $files stopdigits {}
 	}
 }
 
 ## say each digit
-proc ::ygi::say_digits {digits {language en-UK}} {
+proc ::ygi::say_digits {digits {language en-GB}} {
 	set digits [string trim $digits]
 
 	set prefix "$language/"

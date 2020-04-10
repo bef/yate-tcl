@@ -47,17 +47,17 @@ VOICE=Daniel
 
 ## digits
 for i in {0..23} 30 40 50 60 70 80 90 and hundred thousand million minus oclock hash asterisk; do
-	createsnd en-UK/digits/$i $i
+	createsnd en-GB/digits/$i $i
 done
 
 ## NATO phonetic alphabet
 for i in alpha bravo charlie delta echo foxtrot golf hotel india juliet kilo lima mike november oscar papa quebec romeo sierra tango uniform victor whiskey xray yankee zulu; do
-	createsnd en-UK/phonetic/${i:0:1} $i
+	createsnd en-GB/phonetic/${i:0:1} $i
 done
 
 ## letters
 for i in {a..z} dollar dash percent slash equals comma fullstop; do
-	createsnd en-UK/letters/$i $i
+	createsnd en-GB/letters/$i $i
 done
 
 ## silence
@@ -75,17 +75,17 @@ for i in {1..10}; do
 done
 
 ## words and phrases
-createsnd en-UK/enter-password "please enter your password, followed by the pound key"
-createsnd en-UK/goodbye goodbye
-createsnd en-UK/t-magic "there is no such thing as magic"
-createsnd en-UK/time time
-createsnd en-UK/welcome welcome
-createsnd en-UK/utc utc
-createsnd en-UK/im-sorry "i am sorry"
-createsnd en-UK/conference-unavailable "this conference is currently unavailable"
-createsnd en-UK/please-try-again-later "please try again later"
-createsnd en-UK/please-enter-your-access-code "please enter your access code, followed by the pound key"
-createsnd en-UK/press-snom-reboot "please press star star hash hash"
+createsnd en-GB/enter-password "please enter your password, followed by the pound key"
+createsnd en-GB/goodbye goodbye
+createsnd en-GB/t-magic "there is no such thing as magic"
+createsnd en-GB/time time
+createsnd en-GB/welcome welcome
+createsnd en-GB/utc utc
+createsnd en-GB/im-sorry "i am sorry"
+createsnd en-GB/conference-unavailable "this conference is currently unavailable"
+createsnd en-GB/please-try-again-later "please try again later"
+createsnd en-GB/please-enter-your-access-code "please enter your access code, followed by the pound key"
+createsnd en-GB/press-snom-reboot "please press star star hash hash"
 
 
 ###########################################################
