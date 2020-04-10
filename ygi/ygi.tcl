@@ -92,7 +92,7 @@ namespace eval ::ygi {
 	array set watchhandler {}
 	variable dtmfbuffer {}
 	variable config
-	array set config {sndpath {} sndformat {}}
+	array set config {sndpath {} sndformat {} default_language {}}
 }
 
 ##
@@ -782,12 +782,38 @@ proc ::ygi::getenv {key {default ""}} {
 	return $default
 }
 
+## return channel language
+## 1. set language to override value given by parameter OR
+## 2. set language to channel value OR
+## 3. set language to global default OR
+## 4. set language to hardcoded default
+## example yate.conf section:
+## [ygi]
+## default_language=en_UK
+proc ::ygi::getlanguage {{language {}}} {
+	variable config
+	if {$language eq ""} {
+		set language [getenv language]
+	}
+	if {$language eq ""} {
+		if {$config(default_language) eq ""} {
+			set config(default_language) [setlocal config.ygi.default_language]
+			set language $config(default_language)
+		}
+	}
+	if {$language eq ""} {
+		set language "en_UK"
+	}
+	regsub -all -- {[^a-zA-Z0-9_]} $language {} language
+	return $language
+}
+
 ##
 
-proc ::ygi::_en_numberfiles {number} {
+proc ::ygi::_en_numberfiles {number {language "en"}} {
 	if {$number < 0} {return}
-	if {$number <= 23} {return [list $number]}
-	if {[_find_soundfile "digits/$number"] ne "digits/$number"} {return [list $number]}
+	if {$number <= 20} {return [list $number]}
+	if {[_find_soundfile "$language/digits/$number"] ne "$language/digits/$number"} {return [list $number]}
 	if {$number < 100} {
 		set rem [expr {$number % 10}]
 		set files [list [expr {$number - $rem}]]
@@ -803,10 +829,10 @@ proc ::ygi::_en_numberfiles {number} {
 	return [split $number ""]
 }
 
-proc ::ygi::_de_numberfiles {number} {
+proc ::ygi::_de_numberfiles {number {language "de"}} {
 	if {$number < 0} {return}
-	if {$number <= 23} {return [list $number]}
-	if {[_find_soundfile "de/digits/$number"] ne "de/digits/$number"} {return [list $number]}
+	if {$number <= 20} {return [list $number]}
+	if {[_find_soundfile "$language/digits/$number"] ne "$language/digits/$number"} {return [list $number]}
 	if {$number < 100} {
 		set rem [expr {$number % 10}]
 		set tens [expr {$number - $rem}]
@@ -823,36 +849,37 @@ proc ::ygi::_de_numberfiles {number} {
 }
 
 ## say number
-proc ::ygi::say_number {number {language en}} {
+proc ::ygi::say_number {number {language {}}} {
 	set number [string trim $number]
 	if {$number ne "0"} {set number [string trimleft $number "0"]}
 	if {$number eq "" || ![string is integer $number]} {
 		play_force ybeeperr
 		return
 	}
+	set language [getlanguage $language]
 
-	switch $language {
-		de {
-			set files [_de_numberfiles $number]
-			set files [lmap f $files {set _ "de/digits/$f"}]
+	switch -glob $language {
+		de* {
+			set files [_de_numberfiles $number $language]
 		}
-		en -
+		en* -
 		default {
-			set files [_en_numberfiles $number]
-			set files [lmap f $files {set _ "digits/$f"}]
+			set files [_en_numberfiles $number $language]
 		}
 	}
+	set files [lmap f $files {set _ "$language/digits/$f"}]
+
 	if {[llength $files]} {
 		play_getdigit filelist $files stopdigits {}
 	}
 }
 
 ## say each digit
-proc ::ygi::say_digits {digits {language en}} {
+proc ::ygi::say_digits {digits {language {}}} {
 	set digits [string trim $digits]
 
-	set prefix ""
-	if {$language ne "en"} {set prefix "$language/"}
+	set language [getlanguage $language]
+	set prefix "$language/"
 	
 	foreach d [join [split $digits ""] " sleep "] {
 		switch -regexp -- $d {

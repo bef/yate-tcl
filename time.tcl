@@ -15,6 +15,9 @@
 
 package require Tcl 8.5
 
+## soundfile path prefix
+set prefix en
+
 ## YGI setup
 set auto_path [linsert $auto_path 0 [file dirname $::argv0]]
 package require ygi
@@ -37,21 +40,21 @@ for {set i 0} {$i < 3} {incr i} {
 	set out {time silence/200u}
 
 	if {$h <= 23} {
-		lappend out "digits/$h"
+		lappend out "$prefix/digits/$h"
 	} else {
-		lappend out "digits/20" "digits/[expr {$h - 20}]"
+		lappend out "$prefix/digits/20" "$prefix/digits/[expr {$h - 20}]"
 	}
 	lappend out silence/150u
 
 	if {$m == 0} {
-		lappend out "digits/oclock"
+		lappend out "$prefix/digits/oclock"
 	} elseif {$m < 10} {
-		lappend out "letters/o" "digits/$m"
+		lappend out "$prefix/letters/o" "$prefix/digits/$m"
 	} elseif {$m <= 20} {
-		lappend out "digits/$m"
+		lappend out "$prefix/digits/$m"
 	} else {
-		lappend out "digits/[expr {$m/10*10}]"
-		if {[expr {$m % 10}]} { lappend out "digits/[expr {$m % 10}]" }
+		lappend out "$prefix/digits/[expr {$m/10*10}]"
+		if {[expr {$m % 10}]} { lappend out "$prefix/digits/[expr {$m % 10}]" }
 	}
 
 	foreach f $out {
