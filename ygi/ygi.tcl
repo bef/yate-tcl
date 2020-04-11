@@ -789,7 +789,7 @@ proc ::ygi::getenv {key {default ""}} {
 ## 4. set language to hardcoded default
 ## example yate.conf section:
 ## [ygi]
-## default_language=en_UK
+## default_language=en-GB
 proc ::ygi::getlanguage {{language {}}} {
 	variable config
 	if {$language eq ""} {
@@ -802,9 +802,9 @@ proc ::ygi::getlanguage {{language {}}} {
 		}
 	}
 	if {$language eq ""} {
-		set language "en_UK"
+		set language "en-GB"
 	}
-	regsub -all -- {[^a-zA-Z0-9_]} $language {} language
+	regsub -all -- {[^a-zA-Z0-9_-]} $language {} language
 	return $language
 }
 
