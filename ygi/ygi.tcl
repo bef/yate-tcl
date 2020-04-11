@@ -845,7 +845,6 @@ proc ::ygi::_de_numberfiles {number {language "de"}} {
 	if {$number < 1000000} {
 		return [list {*}[_de_numberfiles [expr {$number / 1000}]] tausend {*}[_de_numberfiles [expr {$number % 1000}]]]
 	}
-	
 	return [split $number ""]
 }
 
