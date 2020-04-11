@@ -804,7 +804,7 @@ proc ::ygi::getlanguage {{language {}}} {
 	if {$language eq ""} {
 		set language "en_UK"
 	}
-	regsub -all -- {[^a-zA-Z0-9_]} $language {} language
+	regsub -all -- {[^a-zA-Z0-9_-]} $language {} language
 	return $language
 }
 
