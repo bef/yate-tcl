@@ -93,7 +93,7 @@ createsnd en-GB/press-snom-reboot "please press star star hash hash"
 VOICE=Anna
 
 ## digits
-for i in {0..23} 30 40 50 60 70 80 90 und hundert tausend million millionen minus uhr; do
+for i in {0..23} 30 40 50 60 70 80 90 ein eine und hundert tausend million millionen minus uhr; do
 	createsnd de-DE/digits/$i $i
 done
 createsnd de-DE/digits/hash raute

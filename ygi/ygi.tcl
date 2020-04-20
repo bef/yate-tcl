@@ -811,7 +811,7 @@ proc ::ygi::getlanguage {{language {}}} {
 ##
 
 proc ::ygi::_en_numberfiles {number {language "en"}} {
-	if {$number < 0} {return}
+	if {$number < 0} { return [list minus {*}[_en_numberfiles [expr {-$number}] $language]] }
 	if {$number <= 20} {return [list $number]}
 	if {[_find_soundfile "$language/digits/$number"] ne "$language/digits/$number"} {return [list $number]}
 	if {$number < 100} {
@@ -829,23 +829,76 @@ proc ::ygi::_en_numberfiles {number {language "en"}} {
 	return [split $number ""]
 }
 
+## map 1 -> "ein"
+proc ::ygi::_de_map_eins_ein {digit} {
+	if {$digit == "1"} {
+		return "ein"
+	}
+	return $digit
+}
+
+## split number into groups of 3, e.g. 1234567 -> 1 234 567
+proc ::ygi::_de_split_numbergroups {number} {
+	set res {}
+	while {$number ne ""} {
+		lappend res [string range $number end-2 end]
+		set number [string range $number 0 end-3]
+	}
+	return [lreverse $res]
+}
+
 proc ::ygi::_de_numberfiles {number {language "de"}} {
-	if {$number < 0} {return}
+	if {$number < 0} { return [list minus {*}[_de_numberfiles [expr {-$number}] $language]] }
 	if {$number <= 20} {return [list $number]}
 	if {[_find_soundfile "$language/digits/$number"] ne "$language/digits/$number"} {return [list $number]}
-	if {$number < 100} {
+
+	if {$number >= 1000000000} {
+		## number too big. -> say digits separately
+		return [split $number ""]
+	}
+
+	set groups [_de_split_numbergroups $number]
+	set group_index [llength $groups]
+
+	set res {}
+	foreach number $groups {
+		incr group_index -1
+		puts "$group_index $number"
+		if {$number == 0} { continue }
+
+		set hundert [expr {$number / 100}]
 		set rem [expr {$number % 10}]
-		set tens [expr {$number - $rem}]
-		if {$rem} {return [list $rem und $tens]}
-		return [list $tens]
+		set tens [expr {($number % 100) - $rem}]
+		if {$hundert > 0} {
+			lappend res [_de_map_eins_ein $hundert] hundert
+			set number [expr {$number % 100}]
+		} elseif {$number == 1} {
+			switch $group_index {
+				0 { lappend res 1 }
+				1 { lappend res ein tausend }
+				2 { lappend res eine million }
+			}
+			continue
+		}
+
+		if {$tens == 0 && $rem == 1} {
+			## x01 style number
+			lappend res 1
+		} elseif {$number <= 20} {
+			lappend res $number
+		} elseif {$rem} {
+			lappend res [_de_map_eins_ein $rem] und $tens
+		} else {
+			lappend res $tens
+		}
+
+		switch $group_index {
+			1 { lappend res tausend }
+			2 { lappend res millionen }
+		}
+
 	}
-	if {$number < 1000} {
-		return [list [expr {$number / 100}] hundert {*}[_de_numberfiles [expr {$number % 100}]]]
-	}
-	if {$number < 1000000} {
-		return [list {*}[_de_numberfiles [expr {$number / 1000}]] tausend {*}[_de_numberfiles [expr {$number % 1000}]]]
-	}
-	return [split $number ""]
+	return $res
 }
 
 ## say number
