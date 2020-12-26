@@ -841,7 +841,10 @@ proc ::ygi::_de_map_eins_ein {digit} {
 proc ::ygi::_de_split_numbergroups {number} {
 	set res {}
 	while {$number ne ""} {
-		lappend res [string range $number end-2 end]
+		set group [string range $number end-2 end]
+		set group [string trimleft $group {0}]
+		if {$group eq ""} {set group 0}
+		lappend res $group
 		set number [string range $number 0 end-3]
 	}
 	return [lreverse $res]
@@ -881,15 +884,17 @@ proc ::ygi::_de_numberfiles {number {language "de"}} {
 			continue
 		}
 
-		if {$tens == 0 && $rem == 1} {
-			## x01 style number
-			lappend res 1
-		} elseif {$number <= 20} {
-			lappend res $number
-		} elseif {$rem} {
-			lappend res [_de_map_eins_ein $rem] und $tens
-		} else {
-			lappend res $tens
+		if {!($number == 0 && $hundert > 0)} {
+			if {$tens == 0 && $rem == 1} {
+				## x01 style number
+				lappend res 1
+			} elseif {$number <= 20} {
+				lappend res $number
+			} elseif {$rem} {
+				lappend res [_de_map_eins_ein $rem] und $tens
+			} else {
+				lappend res $tens
+			}
 		}
 
 		switch $group_index {
